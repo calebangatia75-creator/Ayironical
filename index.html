@@ -50,6 +50,19 @@
       background: radial-gradient(1200px 600px at 10% -10%, rgba(255, 122, 89, 0.18), transparent 60%),
         radial-gradient(900px 500px at 110% 10%, rgba(130, 138, 109, 0.18), transparent 60%),
         #f7f3ed;
+      overflow-x: hidden;
+    }
+    img,
+    iframe {
+      max-width: 100%;
+    }
+    header > div,
+    nav > div,
+    section > div,
+    footer > div,
+    .grid,
+    .flex {
+      min-width: 0;
     }
     .grain {
       position: fixed;
@@ -123,6 +136,116 @@
         grid-auto-columns: minmax(220px, 78vw);
       }
     }
+    @media (max-width: 640px) {
+      nav > div:first-child {
+        padding: 0.85rem 1rem !important;
+      }
+      nav img {
+        max-height: 2.6rem;
+      }
+      #mobile-menu > div {
+        padding: 0.75rem 1rem 1rem !important;
+      }
+      #mobile-menu a {
+        padding: 0.65rem 0;
+      }
+      header {
+        padding: 6.5rem 1rem 3.5rem !important;
+      }
+      section {
+        padding: 3.5rem 1rem !important;
+      }
+      footer {
+        padding: 2rem 1rem !important;
+      }
+      header h1 {
+        font-size: clamp(2.55rem, 13vw, 3.35rem) !important;
+        line-height: 1.03 !important;
+      }
+      section h2 {
+        font-size: clamp(2rem, 10vw, 2.55rem) !important;
+        line-height: 1.08 !important;
+      }
+      h3 {
+        line-height: 1.15 !important;
+      }
+      p,
+      li,
+      a,
+      input,
+      select,
+      textarea,
+      button {
+        overflow-wrap: anywhere;
+      }
+      .tracking-\[0\.3em\],
+      .tracking-\[0\.2em\],
+      .tracking-\[0\.18em\] {
+        letter-spacing: 0.12em !important;
+      }
+      .text-lg {
+        font-size: 1rem !important;
+      }
+      .text-2xl {
+        font-size: 1.35rem !important;
+      }
+      .text-3xl {
+        font-size: 1.7rem !important;
+      }
+      .rounded-3xl,
+      .rounded-\[28px\] {
+        border-radius: 1rem !important;
+      }
+      .p-8 {
+        padding: 1.25rem !important;
+      }
+      .p-6,
+      .p-5 {
+        padding: 1rem !important;
+      }
+      .gap-12 {
+        gap: 2rem !important;
+      }
+      .gap-10 {
+        gap: 1.75rem !important;
+      }
+      .mt-12,
+      .mt-10 {
+        margin-top: 2rem !important;
+      }
+      .horizontal-book-grid {
+        grid-auto-columns: minmax(0, 86vw);
+        gap: 1rem;
+        scroll-snap-type: x mandatory;
+      }
+      .video-frame {
+        border-radius: inherit;
+      }
+      .mobile-full {
+        width: 100%;
+      }
+      .mobile-media {
+        height: clamp(260px, 75vw, 340px) !important;
+      }
+      .substack-embed iframe {
+        height: 330px;
+      }
+      #press-grid {
+        gap: 0.75rem !important;
+      }
+      .card-hover:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      footer,
+      footer .max-w-6xl {
+        text-align: center;
+      }
+      .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 <body class="font-sans text-ink antialiased relative">
@@ -133,7 +256,7 @@
       <a href="#" class="inline-flex items-center">
         <img src="WhatsApp Image 2026-04-14 at 5.51.24 AM.jpeg" alt="Ayironical logo" class="h-12 w-auto object-contain" />
       </a>
-      <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
+      <div class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold">
         <a href="#about" class="hover:text-ember transition-colors">About</a>
         <a href="#stories" class="hover:text-ember transition-colors">Stories</a>
         <a href="#events" class="hover:text-ember transition-colors">Events</a>
@@ -143,11 +266,11 @@
         <a href="#services" class="hover:text-ember transition-colors">Services</a>
         <a href="#contact" class="hover:text-ember transition-colors">Contact</a>
       </div>
-      <button onclick="toggleMobileMenu()" class="md:hidden border border-ink/20 rounded-full px-4 py-2 text-sm font-semibold">
+      <button onclick="toggleMobileMenu()" class="lg:hidden border border-ink/20 rounded-full px-4 py-2 text-sm font-semibold">
         Menu
       </button>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden bg-vellum border-t border-ink/10">
+    <div id="mobile-menu" class="hidden lg:hidden bg-vellum border-t border-ink/10">
       <div class="px-6 py-4 space-y-3 text-sm font-semibold">
         <a href="#about" class="block hover:text-ember">About</a>
         <a href="#stories" class="block hover:text-ember">Stories</a>
@@ -172,10 +295,10 @@
           Fierce Kenyan narratives. Spoken word that splits silence wide open. Literature that leaves a mark.
         </p>
         <div class="fade-up delay-3 flex flex-col sm:flex-row gap-4 mt-8">
-          <a href="#free-content" class="px-7 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors shadow-glow">
+          <a href="#free-content" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors shadow-glow">
             Get Free Chapter
           </a>
-          <a href="#books" class="px-7 py-4 rounded-full border-2 border-ink font-semibold hover:bg-ink hover:text-vellum transition-colors">
+          <a href="#books" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full border-2 border-ink font-semibold hover:bg-ink hover:text-vellum transition-colors">
             Explore Books
           </a>
         </div>
@@ -191,7 +314,7 @@
         <div class="relative rounded-[28px] overflow-hidden shadow-2xl border border-ink/10">
           <img src="WhatsApp Image 2026-04-14 at 5.43.58 AM.jpeg" alt="Portrait of Dan" class="w-full h-full object-cover object-top" />
         </div>
-        <div class="absolute -bottom-6 left-6 bg-ink text-vellum px-6 py-4 rounded-2xl shadow-lg">
+        <div class="absolute -bottom-6 left-4 right-4 sm:left-6 sm:right-auto bg-ink text-vellum px-5 sm:px-6 py-4 rounded-2xl shadow-lg">
           <p class="text-xs uppercase tracking-[0.2em] text-vellum/70">Latest Book</p>
           <p class="font-serif text-xl">The Kanisa Limited</p>
         </div>
@@ -246,22 +369,17 @@
       <p class="text-vellum/70 mt-4 max-w-2xl mx-auto">
         Sign up for early releases, backstage notes, and the spoken word previews I only share with subscribers.
       </p>
-      <form id="email-form" class="max-w-lg mx-auto mt-8" action="https://app.convertkit.com/forms/0000000/subscriptions" method="POST" onsubmit="handleEmailSubmit(event)">
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input
-            type="email"
-            id="email-input"
-            name="email"
-            required
-            placeholder="Enter your email"
-            class="flex-1 px-5 py-4 rounded-full bg-white/10 border border-white/20 placeholder:text-vellum/40 focus:outline-none focus:border-ember"
-          />
-          <button type="submit" class="px-7 py-4 rounded-full bg-ember font-semibold hover:bg-emberDark transition-colors">
-            Subscribe
-          </button>
-        </div>
-        <p id="form-message" class="mt-4 text-sm text-ember hidden"></p>
-      </form>
+      <div class="substack-embed max-w-xl mx-auto mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white">
+        <iframe
+          src="https://ayironical.substack.com/embed"
+          title="Subscribe to Dan's Substack"
+          width="100%"
+          height="320"
+          style="border: 0; background: white;"
+          frameborder="0"
+          scrolling="no">
+        </iframe>
+      </div>
       <div class="grid md:grid-cols-3 gap-6 mt-12 text-left">
         <div class="border border-white/10 rounded-2xl p-6 bg-white/5">
           <h3 class="font-serif text-xl text-ember">Free Chapter</h3>
@@ -323,17 +441,17 @@
           <span class="rounded-full border border-white/10 px-4 py-2">Festivals</span>
         </div>
         <div class="flex flex-col sm:flex-row gap-3">
-          <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20book%20you%20for%20a%20live%20spoken%20word%20performance." target="_blank" rel="noreferrer" class="inline-flex items-center justify-center px-6 py-4 rounded-full bg-ember text-white font-semibold hover:bg-emberDark transition-colors">
+          <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20book%20you%20for%20a%20live%20spoken%20word%20performance." target="_blank" rel="noreferrer" class="mobile-full inline-flex items-center justify-center px-6 py-4 rounded-full bg-ember text-white font-semibold hover:bg-emberDark transition-colors">
             Book on WhatsApp
           </a>
-          <a href="mailto:ayiro2015@gmail.com?subject=Live%20spoken%20word%20booking%20inquiry" class="inline-flex items-center justify-center px-6 py-4 rounded-full border border-white/20 font-semibold hover:bg-white hover:text-night transition-colors">
+          <a href="mailto:ayiro2015@gmail.com?subject=Live%20spoken%20word%20booking%20inquiry" class="mobile-full inline-flex items-center justify-center px-6 py-4 rounded-full border border-white/20 font-semibold hover:bg-white hover:text-night transition-colors">
             Email Booking Inquiry
           </a>
         </div>
       </div>
       <div class="space-y-5">
         <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-white/5">
-          <img src="assets/live-spoken-word-performance.jpeg" alt="Dan performing spoken word live on stage with musicians" class="w-full h-[360px] md:h-[430px] object-cover object-center" />
+          <img src="assets/live-spoken-word-performance.jpeg" alt="Dan performing spoken word live on stage with musicians" class="mobile-media w-full h-[360px] md:h-[430px] object-cover object-center" />
           <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night/90 to-transparent p-6">
             <p class="text-sm font-semibold text-vellum">Live on stage with music, voice, and presence.</p>
           </div>
@@ -384,7 +502,7 @@
         <p class="text-ink/70 mt-4">Stories worth holding. Words worth keeping.</p>
       </div>
       <div class="mt-12">
-        <div class="flex items-center justify-between gap-4 mb-5">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-5">
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ink/50">Book Gallery</p>
           <p class="text-xs uppercase tracking-[0.2em] text-ember">Scroll sideways to view all</p>
         </div>
@@ -430,7 +548,7 @@
           <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Next Drop</p>
           <h3 class="font-serif text-3xl mt-3">Merch collection details can go here next.</h3>
         </div>
-        <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20your%20merchandise." target="_blank" rel="noreferrer" class="inline-flex items-center justify-center px-6 py-4 rounded-full bg-ember text-white font-semibold hover:bg-emberDark transition-colors">
+        <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20your%20merchandise." target="_blank" rel="noreferrer" class="mobile-full inline-flex items-center justify-center px-6 py-4 rounded-full bg-ember text-white font-semibold hover:bg-emberDark transition-colors">
           Ask About Merchandise
         </a>
       </div>
@@ -504,7 +622,7 @@
           For gigs, tutoring, collaborations, or just to say hello. I respond within 24 hours.
         </p>
         <div class="mt-6">
-          <a href="assets/media-kit.html" download class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-ink/20 font-semibold hover:bg-ink hover:text-vellum transition-colors">
+          <a href="assets/media-kit.html" download class="mobile-full inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full border border-ink/20 font-semibold hover:bg-ink hover:text-vellum transition-colors">
             Download Media Kit
           </a>
         </div>
@@ -544,7 +662,7 @@
           <label class="text-sm font-semibold">Message</label>
           <textarea name="message" rows="5" required class="w-full mt-2 px-4 py-3 rounded-xl border border-ink/10 focus:border-ember focus:outline-none bg-white resize-none"></textarea>
         </div>
-        <button type="submit" class="px-6 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors">
+        <button type="submit" class="mobile-full px-6 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors">
           Send Message
         </button>
         <p id="contact-message" class="text-ember text-sm hidden"></p>
@@ -555,7 +673,7 @@
   <footer class="py-10 px-6 border-t border-ink/10 bg-vellum relative z-10">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       <p class="font-serif text-xl">Ayironical</p>
-      <div class="flex gap-6 text-sm">
+      <div class="footer-links flex gap-6 text-sm">
         <a href="https://x.com/ayiro_dan" target="_blank" rel="noreferrer" class="hover:text-ember">X</a>
         <a href="https://www.instagram.com/ayironical" target="_blank" rel="noreferrer" class="hover:text-ember">Instagram</a>
       </div>
@@ -564,12 +682,6 @@
   </footer>
 
   <script>
-    // Replace formAction with your Mailchimp or ConvertKit form endpoint.
-    const EMAIL_SERVICE = {
-      provider: "convertkit",
-      formAction: "https://app.convertkit.com/forms/0000000/subscriptions",
-    };
-
     const siteData = {
       books: [
         {
@@ -709,7 +821,7 @@
             <h3 class="font-serif text-xl font-bold">${book.title}</h3>
             <p class="text-ember text-sm font-semibold mt-1">${book.subtitle}</p>
             <p class="text-ink/60 text-sm mt-2">${book.description}</p>
-            <a href="${book.link}" target="_blank" rel="noreferrer" class="inline-flex mt-4 px-5 py-3 rounded-full bg-ink text-vellum text-sm font-semibold hover:bg-ember transition-colors">
+            <a href="${book.link}" target="_blank" rel="noreferrer" class="mobile-full inline-flex items-center justify-center mt-4 px-5 py-3 rounded-full bg-ink text-vellum text-sm font-semibold hover:bg-ember transition-colors">
               Buy a Copy
             </a>
           </div>
@@ -774,7 +886,7 @@
         .map(
           (event) => `
         <div class="bg-vellum rounded-2xl border border-ink/10 p-6 card-hover">
-          <div class="flex items-center justify-between text-xs text-ink/50 uppercase tracking-[0.2em]">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs text-ink/50 uppercase tracking-[0.2em]">
             <span>${event.date}</span>
             <span class="text-ember font-semibold">${event.tag}</span>
           </div>
@@ -831,14 +943,6 @@
       if (contactSection) {
         contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }
-
-    function handleEmailSubmit(event) {
-      event.preventDefault();
-
-      const message = document.getElementById("form-message");
-      message.textContent = "Subscription form placeholder is active. Connect your email service to receive submissions.";
-      message.classList.remove("hidden");
     }
 
     function handleContactSubmit(event) {
