@@ -133,7 +133,10 @@
     }
     @media (max-width: 768px) {
       .horizontal-book-grid {
-        grid-auto-columns: minmax(220px, 78vw);
+        grid-auto-columns: 300px;
+        gap: 1rem;
+        padding-right: 1rem;
+        scroll-snap-type: x mandatory;
       }
     }
     @media (max-width: 640px) {
@@ -214,9 +217,7 @@
         margin-top: 2rem !important;
       }
       .horizontal-book-grid {
-        grid-auto-columns: minmax(0, 86vw);
-        gap: 1rem;
-        scroll-snap-type: x mandatory;
+        grid-auto-columns: 300px;
       }
       .video-frame {
         border-radius: inherit;
@@ -244,6 +245,11 @@
       .footer-links {
         justify-content: center;
         flex-wrap: wrap;
+      }
+    }
+    @media (max-width: 360px) {
+      .horizontal-book-grid {
+        grid-auto-columns: 280px;
       }
     }
   </style>
