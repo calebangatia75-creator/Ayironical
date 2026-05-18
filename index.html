@@ -94,6 +94,23 @@
       transform: translateY(-6px);
       box-shadow: 0 20px 50px rgba(16, 17, 19, 0.1);
     }
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: block;
+    }
+    #site-menu {
+      max-height: calc(100vh - 5rem);
+      overflow-y: auto;
+    }
+    .hamburger-line {
+      display: block;
+      width: 1.25rem;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+    }
     .video-frame {
       position: relative;
       padding-bottom: 56.25%;
@@ -131,12 +148,43 @@
     .book-scroll-card {
       scroll-snap-align: start;
     }
+    .merch-feature-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 1rem;
+    }
+    .merch-feature-grid img,
+    .merch-card img {
+      transition: transform 0.5s ease;
+    }
+    .merch-feature-grid a:hover img,
+    .merch-card:hover img {
+      transform: scale(1.04);
+    }
+    .merch-hero {
+      min-height: 520px;
+    }
+    .merch-tile {
+      min-height: 252px;
+    }
+    .merch-mug-image {
+      min-height: 220px;
+    }
     @media (max-width: 768px) {
       .horizontal-book-grid {
         grid-auto-columns: 300px;
         gap: 1rem;
         padding-right: 1rem;
         scroll-snap-type: x mandatory;
+      }
+      .merch-feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .merch-hero {
+        min-height: 420px;
+      }
+      .merch-tile {
+        min-height: 260px;
       }
     }
     @media (max-width: 640px) {
@@ -146,10 +194,10 @@
       nav img {
         max-height: 2.6rem;
       }
-      #mobile-menu > div {
+      #site-menu > div {
         padding: 0.75rem 1rem 1rem !important;
       }
-      #mobile-menu a {
+      #site-menu a {
         padding: 0.65rem 0;
       }
       header {
@@ -157,6 +205,9 @@
       }
       section {
         padding: 3.5rem 1rem !important;
+      }
+      section.page-section {
+        padding-top: 6rem !important;
       }
       footer {
         padding: 2rem 1rem !important;
@@ -219,6 +270,30 @@
       .horizontal-book-grid {
         grid-auto-columns: 300px;
       }
+      .merch-hero {
+        min-height: 380px;
+      }
+      .merch-tile {
+        min-height: 235px;
+      }
+      .merch-mug-image {
+        min-height: 230px;
+      }
+      .merch-card .aspect-\[4\/3\] {
+        aspect-ratio: 1 / 1;
+      }
+      .merch-feature-grid .absolute.left-6,
+      .merch-feature-grid .absolute.left-5 {
+        left: 1rem !important;
+        right: 1rem !important;
+        bottom: 1rem !important;
+      }
+      .merch-feature-grid h3 {
+        font-size: clamp(1.45rem, 8vw, 2rem) !important;
+      }
+      .merch-feature-grid p {
+        max-width: 100%;
+      }
       .video-frame {
         border-radius: inherit;
       }
@@ -251,6 +326,12 @@
       .horizontal-book-grid {
         grid-auto-columns: 280px;
       }
+      .merch-hero {
+        min-height: 340px;
+      }
+      .merch-tile {
+        min-height: 210px;
+      }
     }
   </style>
 </head>
@@ -259,38 +340,35 @@
 
   <nav class="fixed w-full z-50 bg-vellum/80 backdrop-blur-lg border-b border-ink/10">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#" class="inline-flex items-center">
+      <a href="#home" data-page-link="home" class="inline-flex items-center">
         <img src="WhatsApp Image 2026-04-14 at 5.51.24 AM.jpeg" alt="Ayironical logo" class="h-12 w-auto object-contain" />
       </a>
-      <div class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold">
-        <a href="#about" class="hover:text-ember transition-colors">About</a>
-        <a href="#stories" class="hover:text-ember transition-colors">Stories</a>
-        <a href="#events" class="hover:text-ember transition-colors">Events</a>
-        <a href="#spoken-word" class="hover:text-ember transition-colors">Spoken Word</a>
-        <a href="#books" class="hover:text-ember transition-colors">Books</a>
-        <a href="#merchandise" class="hover:text-ember transition-colors">Merchandise</a>
-        <a href="#services" class="hover:text-ember transition-colors">Services</a>
-        <a href="#contact" class="hover:text-ember transition-colors">Contact</a>
-      </div>
-      <button onclick="toggleMobileMenu()" class="lg:hidden border border-ink/20 rounded-full px-4 py-2 text-sm font-semibold">
+      <button onclick="toggleSiteMenu()" class="inline-flex items-center gap-3 border border-ink/20 rounded-full px-4 py-2 text-sm font-semibold hover:bg-ink hover:text-vellum transition-colors" aria-controls="site-menu" aria-expanded="false" id="menu-toggle">
+        <span class="flex flex-col gap-1" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
         Menu
       </button>
     </div>
-    <div id="mobile-menu" class="hidden lg:hidden bg-vellum border-t border-ink/10">
-      <div class="px-6 py-4 space-y-3 text-sm font-semibold">
-        <a href="#about" class="block hover:text-ember">About</a>
-        <a href="#stories" class="block hover:text-ember">Stories</a>
-        <a href="#events" class="block hover:text-ember">Events</a>
-        <a href="#spoken-word" class="block hover:text-ember">Spoken Word</a>
-        <a href="#books" class="block hover:text-ember">Books</a>
-        <a href="#merchandise" class="block hover:text-ember">Merchandise</a>
-        <a href="#services" class="block hover:text-ember">Services</a>
-        <a href="#contact" class="block hover:text-ember">Contact</a>
+    <div id="site-menu" class="hidden bg-vellum border-t border-ink/10 shadow-lg">
+      <div class="max-w-6xl mx-auto px-6 py-5 grid sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-3 text-sm font-semibold">
+        <a href="#home" data-page-link="home" class="block hover:text-ember">Home</a>
+        <a href="#about" data-page-link="about" class="block hover:text-ember">About</a>
+        <a href="#free-content" data-page-link="free-content" class="block hover:text-ember">Free Chapter</a>
+        <a href="#events" data-page-link="events" class="block hover:text-ember">Events</a>
+        <a href="#spoken-word" data-page-link="spoken-word" class="block hover:text-ember">Spoken Word</a>
+        <a href="#books" data-page-link="books" class="block hover:text-ember">Books</a>
+        <a href="#merchandise" data-page-link="merchandise" class="block hover:text-ember">Merchandise</a>
+        <a href="#services" data-page-link="services" class="block hover:text-ember">Services</a>
+        <a href="#press" data-page-link="press" class="block hover:text-ember">Press</a>
+        <a href="#contact" data-page-link="contact" class="block hover:text-ember">Contact</a>
       </div>
     </div>
   </nav>
 
-  <header class="pt-32 pb-20 px-6 relative z-10">
+  <header id="home" class="page-section active pt-32 pb-20 px-6 relative z-10">
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
       <div>
         <p class="fade-up text-ember font-semibold uppercase tracking-[0.3em] text-xs">Dan | Author. Poet. Educator.</p>
@@ -301,10 +379,10 @@
           Fierce Kenyan narratives. Spoken word that splits silence wide open. Literature that leaves a mark.
         </p>
         <div class="fade-up delay-3 flex flex-col sm:flex-row gap-4 mt-8">
-          <a href="#free-content" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors shadow-glow">
+          <a href="#free-content" data-page-link="free-content" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full bg-ink text-vellum font-semibold hover:bg-ember transition-colors shadow-glow">
             Get Free Chapter
           </a>
-          <a href="#books" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full border-2 border-ink font-semibold hover:bg-ink hover:text-vellum transition-colors">
+          <a href="#books" data-page-link="books" class="mobile-full inline-flex items-center justify-center px-7 py-4 rounded-full border-2 border-ink font-semibold hover:bg-ink hover:text-vellum transition-colors">
             Explore Books
           </a>
         </div>
@@ -328,7 +406,7 @@
     </div>
   </header>
 
-  <section id="about" class="py-20 px-6 bg-white relative z-10">
+  <section id="about" class="page-section py-20 px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">About Dan</p>
@@ -368,7 +446,7 @@
     </div>
   </section>
 
-  <section id="free-content" class="py-20 px-6 bg-night text-vellum relative z-10">
+  <section id="free-content" class="page-section py-20 px-6 bg-night text-vellum relative z-10">
     <div class="max-w-5xl mx-auto text-center">
       <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Inner Circle</p>
       <h2 class="font-serif text-4xl md:text-5xl mt-4">Get the opening chapter free</h2>
@@ -403,23 +481,7 @@
     </div>
   </section>
 
-  <section id="stories" class="py-20 px-6 relative z-10">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div>
-          <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Serialized Novel</p>
-          <h2 class="font-serif text-4xl md:text-5xl mt-2">Borrowed Life</h2>
-          <p class="text-ink/70 mt-4 max-w-2xl">
-            A raw Kenyan serial about Karanja, a young Nairobi artist learning what it means to live on borrowed time. New chapters every Friday.
-          </p>
-        </div>
-        <a href="https://ayironical.substack.com" target="_blank" rel="noreferrer" class="text-sm font-semibold hover:text-ember transition-colors">Read on Substack -></a>
-      </div>
-      <div id="blog-grid" class="grid md:grid-cols-3 gap-6 mt-10"></div>
-    </div>
-  </section>
-
-  <section id="events" class="py-20 px-6 bg-night text-vellum relative z-10">
+  <section id="events" class="page-section py-20 px-6 bg-night text-vellum relative z-10">
     <div class="max-w-6xl mx-auto grid lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center">
       <div class="space-y-6">
         <div>
@@ -477,7 +539,7 @@
     </div>
   </section>
 
-  <section id="spoken-word" class="py-20 px-6 bg-white relative z-10">
+  <section id="spoken-word" class="page-section py-20 px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Performance</p>
@@ -490,17 +552,7 @@
     </div>
   </section>
 
-  <section id="testimonials" class="py-20 px-6 relative z-10">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center max-w-2xl mx-auto">
-        <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Testimonials</p>
-        <h2 class="font-serif text-4xl md:text-5xl mt-2">Readers and Students Speak</h2>
-      </div>
-      <div id="testimonials-grid" class="grid md:grid-cols-3 gap-6 mt-10"></div>
-    </div>
-  </section>
-
-  <section id="books" class="py-20 px-6 relative z-10">
+  <section id="books" class="page-section py-20 px-6 relative z-10">
     <div class="max-w-6xl mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">The Library</p>
@@ -517,42 +569,84 @@
     </div>
   </section>
 
-  <section id="merchandise" class="py-20 px-6 bg-white relative z-10">
+  <section id="merchandise" class="page-section py-20 px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Merchandise</p>
-        <h2 class="font-serif text-4xl md:text-5xl mt-2">Wear the words. Carry the story.</h2>
+        <h2 class="font-serif text-4xl md:text-5xl mt-2">Ayironical merch, stamped in gold.</h2>
         <p class="text-ink/70 mt-4">
-          A dedicated space for branded items, signed copies, and story-inspired merchandise.
+          Clean essentials for readers, performers, and everyone who carries the story into the street.
         </p>
       </div>
-      <div class="grid md:grid-cols-3 gap-6 mt-12">
-        <div class="rounded-3xl border border-ink/10 bg-vellum/70 p-8 card-hover">
-          <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">Coming Soon</p>
-          <h3 class="font-serif text-2xl mt-4">Apparel</h3>
-          <p class="text-sm text-ink/65 mt-3">
-            T-shirts, hoodies, and wearable pieces built around the Ayironical identity.
-          </p>
-        </div>
-        <div class="rounded-3xl border border-ink/10 bg-vellum/70 p-8 card-hover">
-          <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">Coming Soon</p>
-          <h3 class="font-serif text-2xl mt-4">Signed Editions</h3>
-          <p class="text-sm text-ink/65 mt-3">
-            Special copies, collector bundles, and book packages for readers who want something personal.
-          </p>
-        </div>
-        <div class="rounded-3xl border border-ink/10 bg-vellum/70 p-8 card-hover">
-          <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">Coming Soon</p>
-          <h3 class="font-serif text-2xl mt-4">Creative Accessories</h3>
-          <p class="text-sm text-ink/65 mt-3">
-            Posters, bookmarks, tote bags, and other pieces inspired by the books and performances.
-          </p>
+
+      <div class="merch-feature-grid mt-12">
+        <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20the%20black%20Ayironical%20hoodie." target="_blank" rel="noreferrer" class="merch-hero group relative overflow-hidden rounded-[28px] bg-night text-vellum shadow-2xl">
+          <img src="assets/merch-black-hoodie.jpeg" alt="Black Ayironical hoodie with gold logo" class="absolute inset-0 h-full w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/10 to-transparent"></div>
+          <div class="absolute left-6 right-6 bottom-6">
+            <p class="text-xs uppercase tracking-[0.3em] text-ember font-semibold">Featured Drop</p>
+            <h3 class="font-serif text-4xl mt-3">Black Gold Hoodie</h3>
+            <p class="text-sm text-vellum/70 mt-3 max-w-md">A heavyweight statement piece with the Ayironical mark front and center.</p>
+          </div>
+        </a>
+
+        <div class="grid gap-4">
+          <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20the%20Ayironical%20cap." target="_blank" rel="noreferrer" class="merch-tile group relative overflow-hidden rounded-[28px] bg-ink text-vellum shadow-lg">
+            <img src="assets/merch-cap.jpeg" alt="Black Ayironical cap with gold logo" class="absolute inset-0 h-full w-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-night/80 to-transparent"></div>
+            <div class="absolute left-5 right-5 bottom-5">
+              <p class="text-xs uppercase tracking-[0.25em] text-ember font-semibold">Headwear</p>
+              <h3 class="font-serif text-2xl mt-2">Signature Cap</h3>
+            </div>
+          </a>
+
+          <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20the%20Ayironical%20mug." target="_blank" rel="noreferrer" class="group grid sm:grid-cols-[0.85fr_1fr] overflow-hidden rounded-[28px] border border-ink/10 bg-vellum shadow-sm">
+            <div class="merch-mug-image overflow-hidden">
+              <img src="assets/merch-mug.jpeg" alt="White Ayironical mug with gold logo" class="h-full w-full object-cover" />
+            </div>
+            <div class="p-6 flex flex-col justify-center">
+              <p class="text-xs uppercase tracking-[0.25em] text-ember font-semibold">Desk Essential</p>
+              <h3 class="font-serif text-2xl mt-2">Logo Mug</h3>
+              <p class="text-sm text-ink/60 mt-3">For coffee, tea, drafts, and late-night edits.</p>
+            </div>
+          </a>
         </div>
       </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <article class="merch-card overflow-hidden rounded-[24px] border border-ink/10 bg-vellum/70 card-hover">
+          <div class="aspect-[4/3] overflow-hidden bg-night">
+            <img src="assets/merch-black-shirt.jpeg" alt="Black Ayironical t-shirt with gold logo" class="h-full w-full object-cover" />
+          </div>
+          <div class="p-6">
+            <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">T-Shirt</p>
+            <h3 class="font-serif text-2xl mt-2">Black Logo Tee</h3>
+          </div>
+        </article>
+        <article class="merch-card overflow-hidden rounded-[24px] border border-ink/10 bg-vellum/70 card-hover">
+          <div class="aspect-[4/3] overflow-hidden bg-night">
+            <img src="assets/merch-grey-hoodie.jpeg" alt="Grey Ayironical hoodie with gold logo" class="h-full w-full object-cover" />
+          </div>
+          <div class="p-6">
+            <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">Hoodie</p>
+            <h3 class="font-serif text-2xl mt-2">Grey Gold Hoodie</h3>
+          </div>
+        </article>
+        <article class="merch-card overflow-hidden rounded-[24px] border border-ink/10 bg-vellum/70 card-hover">
+          <div class="aspect-[4/3] overflow-hidden bg-night">
+            <img src="assets/merch-grey-shirt.jpeg" alt="Grey Ayironical t-shirt with gold logo" class="h-full w-full object-cover" />
+          </div>
+          <div class="p-6">
+            <p class="text-xs uppercase tracking-[0.2em] text-ember font-semibold">T-Shirt</p>
+            <h3 class="font-serif text-2xl mt-2">Grey Logo Tee</h3>
+          </div>
+        </article>
+      </div>
+
       <div class="mt-10 rounded-3xl bg-night text-vellum p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Next Drop</p>
-          <h3 class="font-serif text-3xl mt-3">Merch collection details can go here next.</h3>
+          <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Orders and Sizing</p>
+          <h3 class="font-serif text-3xl mt-3">Ask what is available and reserve your piece.</h3>
         </div>
         <a href="https://wa.me/254711776856?text=Hello%20Dan%2C%20I%27d%20like%20to%20ask%20about%20your%20merchandise." target="_blank" rel="noreferrer" class="mobile-full inline-flex items-center justify-center px-6 py-4 rounded-full bg-ember text-white font-semibold hover:bg-emberDark transition-colors">
           Ask About Merchandise
@@ -561,7 +655,7 @@
     </div>
   </section>
 
-  <section id="services" class="py-20 px-6 bg-night text-vellum relative z-10">
+  <section id="services" class="page-section py-20 px-6 bg-night text-vellum relative z-10">
     <div class="max-w-6xl mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Work With Me</p>
@@ -609,7 +703,7 @@
     </div>
   </section>
 
-  <section id="press" class="py-14 px-6 bg-vellum border-y border-ink/10 relative z-10">
+  <section id="press" class="page-section py-14 px-6 bg-vellum border-y border-ink/10 relative z-10">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
       <div>
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Press and Partners</p>
@@ -619,7 +713,7 @@
     </div>
   </section>
 
-  <section id="contact" class="py-20 px-6 relative z-10">
+  <section id="contact" class="page-section py-20 px-6 relative z-10">
     <div class="max-w-5xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-12">
       <div>
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Get In Touch</p>
@@ -768,49 +862,6 @@
           tag: "Workshop",
         }
       ],
-      blogPosts: [
-        {
-          title: "BORROWED LIFE",
-          excerpt: "The shape of being seen again",
-          date: "May 8, 2026",
-          category: "Latest Chapter",
-          readTime: "Substack",
-          link: "https://ayironical.substack.com/p/borrowed-life-454",
-        },
-        {
-          title: "BORROWED LIFE",
-          excerpt: "The Courage of Returning",
-          date: "Apr 30, 2026",
-          category: "Chapter",
-          readTime: "Substack",
-          link: "https://ayironical.substack.com/p/borrowed-life-014",
-        },
-        {
-          title: "BORROWED LIFE",
-          excerpt: "Healing before Wholeness",
-          date: "Apr 23, 2026",
-          category: "Chapter",
-          readTime: "Substack",
-          link: "https://ayironical.substack.com/p/borrowed-life-2c4",
-        }
-      ],
-      testimonials: [
-        {
-          quote: "Dan's workshop gave my students the courage to write with honesty and power.",
-          name: "Ms. Wanjiru",
-          role: "Literature Teacher",
-        },
-        {
-          quote: "Every performance feels like a conversation with the city. Electrifying and tender.",
-          name: "Kelvin Otieno",
-          role: "Festival Producer",
-        },
-        {
-          quote: "Matendechere stayed with me for weeks. The voice is both intimate and epic.",
-          name: "Njeri M.",
-          role: "Reader",
-        }
-      ],
       press: ["Nairobi National Theatre", "Book Bunk", "Alliance Francaise", "Kwani?", "Literary Nairobi"],
     };
 
@@ -862,28 +913,6 @@
         .join("");
     }
 
-    function renderBlog() {
-      const grid = document.getElementById("blog-grid");
-      grid.innerHTML = siteData.blogPosts
-        .map(
-          (post) => `
-        <a href="${post.link}" target="_blank" rel="noreferrer" class="block bg-white p-6 rounded-2xl border border-ink/10 card-hover cursor-pointer">
-          <div class="flex flex-wrap items-center gap-2 text-xs text-ink/40 mb-3">
-            <span class="text-ember font-semibold">${post.category}</span>
-            <span>|</span>
-            <span>${post.date}</span>
-            <span>|</span>
-            <span>${post.readTime}</span>
-          </div>
-          <h3 class="font-serif text-xl font-bold mb-3 hover:text-ember transition-colors">${post.title}</h3>
-          <p class="text-ink/70 text-sm leading-relaxed mb-4">${post.excerpt}</p>
-          <span class="text-sm font-semibold text-ink hover:text-ember transition-colors">Read more -></span>
-        </a>
-      `
-        )
-        .join("");
-    }
-
     function renderEvents() {
       const grid = document.getElementById("events-grid");
       if (!grid) return;
@@ -907,21 +936,6 @@
         .join("");
     }
 
-    function renderTestimonials() {
-      const grid = document.getElementById("testimonials-grid");
-      grid.innerHTML = siteData.testimonials
-        .map(
-          (item) => `
-        <div class="bg-white rounded-2xl border border-ink/10 p-6 card-hover">
-          <p class="font-serif text-lg text-ink/80">"${item.quote}"</p>
-          <p class="text-sm font-semibold mt-4">${item.name}</p>
-          <p class="text-xs text-ink/50">${item.role}</p>
-        </div>
-      `
-        )
-        .join("");
-    }
-
     function renderPress() {
       const grid = document.getElementById("press-grid");
       grid.innerHTML = siteData.press
@@ -933,9 +947,35 @@
         .join("");
     }
 
-    function toggleMobileMenu() {
-      const menu = document.getElementById("mobile-menu");
+    function toggleSiteMenu() {
+      const menu = document.getElementById("site-menu");
+      const toggle = document.getElementById("menu-toggle");
+      const isOpening = menu.classList.contains("hidden");
+
       menu.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", String(isOpening));
+    }
+
+    function closeSiteMenu() {
+      const menu = document.getElementById("site-menu");
+      const toggle = document.getElementById("menu-toggle");
+
+      menu.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    function showPage(pageId) {
+      const pages = document.querySelectorAll(".page-section");
+      const requestedPage = document.getElementById(pageId);
+      const activePage = requestedPage && requestedPage.classList.contains("page-section")
+        ? requestedPage
+        : document.getElementById("home");
+
+      pages.forEach((page) => page.classList.toggle("active", page === activePage));
+      document.querySelectorAll("[data-page-link]").forEach((link) => {
+        link.classList.toggle("text-ember", link.dataset.pageLink === activePage.id);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function openBooking(type) {
@@ -947,7 +987,8 @@
       }
 
       if (contactSection) {
-        contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.location.hash = "contact";
+        showPage("contact");
       }
     }
 
@@ -971,10 +1012,22 @@
 
     renderBooks();
     renderVideos();
-    renderBlog();
     renderEvents();
-    renderTestimonials();
     renderPress();
+
+    document.querySelectorAll("[data-page-link]").forEach((link) => {
+      link.addEventListener("click", () => {
+        showPage(link.dataset.pageLink);
+        closeSiteMenu();
+      });
+    });
+
+    window.addEventListener("hashchange", () => {
+      showPage(window.location.hash.replace("#", "") || "home");
+      closeSiteMenu();
+    });
+
+    showPage(window.location.hash.replace("#", "") || "home");
   </script>
 </body>
 </html>
