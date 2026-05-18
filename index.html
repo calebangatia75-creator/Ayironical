@@ -306,9 +306,6 @@
       .substack-embed iframe {
         height: 330px;
       }
-      #press-grid {
-        gap: 0.75rem !important;
-      }
       .card-hover:hover {
         transform: none;
         box-shadow: none;
@@ -355,14 +352,12 @@
     <div id="site-menu" class="hidden bg-vellum border-t border-ink/10 shadow-lg">
       <div class="max-w-6xl mx-auto px-6 py-5 grid sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-3 text-sm font-semibold">
         <a href="#home" data-page-link="home" class="block hover:text-ember">Home</a>
-        <a href="#about" data-page-link="about" class="block hover:text-ember">About</a>
         <a href="#free-content" data-page-link="free-content" class="block hover:text-ember">Free Chapter</a>
         <a href="#events" data-page-link="events" class="block hover:text-ember">Events</a>
         <a href="#spoken-word" data-page-link="spoken-word" class="block hover:text-ember">Spoken Word</a>
         <a href="#books" data-page-link="books" class="block hover:text-ember">Books</a>
         <a href="#merchandise" data-page-link="merchandise" class="block hover:text-ember">Merchandise</a>
         <a href="#services" data-page-link="services" class="block hover:text-ember">Services</a>
-        <a href="#press" data-page-link="press" class="block hover:text-ember">Press</a>
         <a href="#contact" data-page-link="contact" class="block hover:text-ember">Contact</a>
       </div>
     </div>
@@ -404,10 +399,8 @@
         </div>
       </div>
     </div>
-  </header>
 
-  <section id="about" class="page-section py-20 px-6 bg-white relative z-10">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center mt-20 pt-16 border-t border-ink/10">
       <div class="space-y-6">
         <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">About Dan</p>
         <h2 class="font-serif text-4xl md:text-5xl">The story behind the storyteller</h2>
@@ -444,7 +437,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
   <section id="free-content" class="page-section py-20 px-6 bg-night text-vellum relative z-10">
     <div class="max-w-5xl mx-auto text-center">
@@ -703,16 +696,6 @@
     </div>
   </section>
 
-  <section id="press" class="page-section py-14 px-6 bg-vellum border-y border-ink/10 relative z-10">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-      <div>
-        <p class="text-ember font-semibold uppercase tracking-[0.3em] text-xs">Press and Partners</p>
-        <h3 class="font-serif text-2xl mt-2">Trusted by stages, schools, and media</h3>
-      </div>
-      <div id="press-grid" class="flex flex-wrap gap-6 text-sm font-semibold text-ink/60"></div>
-    </div>
-  </section>
-
   <section id="contact" class="page-section py-20 px-6 relative z-10">
     <div class="max-w-5xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-12">
       <div>
@@ -862,7 +845,6 @@
           tag: "Workshop",
         }
       ],
-      press: ["Nairobi National Theatre", "Book Bunk", "Alliance Francaise", "Kwani?", "Literary Nairobi"],
     };
 
     function renderBooks() {
@@ -936,17 +918,6 @@
         .join("");
     }
 
-    function renderPress() {
-      const grid = document.getElementById("press-grid");
-      grid.innerHTML = siteData.press
-        .map(
-          (name) => `
-        <span class="px-4 py-2 rounded-full border border-ink/10 bg-white">${name}</span>
-      `
-        )
-        .join("");
-    }
-
     function toggleSiteMenu() {
       const menu = document.getElementById("site-menu");
       const toggle = document.getElementById("menu-toggle");
@@ -965,8 +936,13 @@
     }
 
     function showPage(pageId) {
+      const legacyPages = {
+        about: "home",
+        press: "home",
+      };
+      const resolvedPageId = legacyPages[pageId] || pageId;
       const pages = document.querySelectorAll(".page-section");
-      const requestedPage = document.getElementById(pageId);
+      const requestedPage = document.getElementById(resolvedPageId);
       const activePage = requestedPage && requestedPage.classList.contains("page-section")
         ? requestedPage
         : document.getElementById("home");
@@ -1013,7 +989,6 @@
     renderBooks();
     renderVideos();
     renderEvents();
-    renderPress();
 
     document.querySelectorAll("[data-page-link]").forEach((link) => {
       link.addEventListener("click", () => {
